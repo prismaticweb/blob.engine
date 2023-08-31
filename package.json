@@ -1,0 +1,16 @@
+{
+  "name": "blob.engine",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Test in packages!\""
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "prettier": "3.0.2",
+    "vitest": "^0.34.3"
+  }
+}
