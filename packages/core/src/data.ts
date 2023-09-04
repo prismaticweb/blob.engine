@@ -11,6 +11,23 @@ export function Engine(spec: { id: string; propertyGraph: PropertyGraph }): Engi
     propertyGraph,
   });
 }
+
+export function ContractType(spec: { id: string; type: "fact" | "relation" }) {}
+
+export type Contract = Readonly<{
+  id: string;
+  type: string;
+}>;
+
+export function Contract(spec: { id: string; type: string }): Contract {
+  const { id, type } = spec;
+
+  return Object.freeze({
+    id,
+    type,
+  });
+}
+
 export type Rule = Readonly<{
   constrain: (...args: Array<any>) => boolean;
   id: string;
