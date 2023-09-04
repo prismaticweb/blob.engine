@@ -33,7 +33,7 @@ export type Rule = Readonly<{
   id: string;
 }>;
 
-function Rule(spec: { constrain: (...args: Array<any>) => boolean; id: string }): Rule {
+export function Rule(spec: { constrain: (...args: Array<any>) => boolean; id: string }): Rule {
   const { constrain, id } = spec;
 
   return Object.freeze({
@@ -47,7 +47,7 @@ export type Feature = Readonly<{
   id: string;
 }>;
 
-function Feature(spec: { composer: (...args: Array<any>) => any; id: string }): Feature {
+export function Feature(spec: { composer: (...args: Array<any>) => any; id: string }): Feature {
   const { composer, id } = spec;
 
   return Object.freeze({
@@ -61,7 +61,7 @@ export type FeatureInstance = Readonly<{
   feature: string;
 }>;
 
-function FeatureInstance(spec: { id: string; feature: string }): FeatureInstance {
+export function FeatureInstance(spec: { id: string; feature: string }): FeatureInstance {
   const { feature, id } = spec;
 
   return Object.freeze({
@@ -76,7 +76,7 @@ export type StaticProperty = Readonly<{
   type: string;
 }>;
 
-function StaticProperty(spec: { id: string; type: string }): StaticProperty {
+export function StaticProperty(spec: { id: string; type: string }): StaticProperty {
   const { id, type } = spec;
 
   return Object.freeze({
@@ -93,7 +93,7 @@ export type ParameterizedProperty = Readonly<{
   type: string;
 }>;
 
-function ParameterizedProperty(spec: {
+export function ParameterizedProperty(spec: {
   id: string;
   parameter: {};
   type: string;
@@ -121,7 +121,7 @@ export type PropertyGraph = Readonly<{
   rules: Map<string, Rule>;
 }>;
 
-function PropertyGraph(spec: {
+export function PropertyGraph(spec: {
   id: string;
   features?: Array<Feature>;
   properties?: Array<StaticProperty | ParameterizedProperty>;
@@ -179,6 +179,5 @@ function PropertyGraph(spec: {
     propertiesByRule,
     rulesByProperty,
     rules,
-    rulesByProperty: new Map(),
   });
 }
