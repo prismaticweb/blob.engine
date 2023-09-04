@@ -92,13 +92,13 @@ function ParameterizedProperty(spec: {
 }
 
 export type PropertyGraph = Readonly<{
-  featureIsntancesByFeature: Map<string, Set<string>>;
-  featureIsntancesByProperty: Map<string, Set<string>>;
+  featureInstancesByFeature: Map<string, Map<string, FeatureInstance>>;
+  featureInstancesByProperty: Map<string, Map<string, FeatureInstance>>;
   propertiesByRule: Map<string, Set<string>>;
   rulesByProperty: Map<string, Set<string>>;
   features: Map<string, Feature>;
   id: string;
-  properties: Map<string, StaticProperty | ParameterizedProperty>;
+  properties: Map<string, Property>;
   rules: Map<string, Rule>;
 }>;
 
@@ -115,17 +115,50 @@ function PropertyGraph(spec: {
     rules: presetRules = [],
   } = spec;
 
-  const features = new Map(presetFeatures.map((feature) => [feature.id, feature]));
-  const properties = new Map(presetProperties.map((property) => [property.id, property]));
-  const rules = new Map(presetRules.map((rule) => [rule.id, rule]));
+  const featureInstancesByFeature = new Map();
+  const featureInstancesByProperty = new Map();
+  const propertiesByRule = new Map();
+  const rulesByProperty = new Map();
+
+  const features = new Map(
+    presetFeatures.map((feature) => {
+      const featureId = feature.id;
+
+      featureInstancesByFeature.set(featureId, new Map());
+
+      return [featureId, feature];
+    }),
+  );
+
+  const properties = new Map(
+    presetProperties.map((property) => {
+      const propertyId = property.id;
+
+      featureInstancesByProperty.set(propertyId, new Map());
+      rulesByProperty.set(propertyId, new Set());
+
+      return [propertyId, property];
+    }),
+  );
+
+  const rules = new Map(
+    presetRules.map((rule) => {
+      const ruleId = rule.id;
+
+      propertiesByRule.set(ruleId, new Set());
+
+      return [ruleId, rule];
+    }),
+  );
 
   return Object.freeze({
     id,
-    featureIsntancesByFeature: new Map(),
-    featureIsntancesByProperty: new Map(),
+    featureInstancesByFeature,
+    featureInstancesByProperty,
     features,
     properties,
-    propertiesByRule: new Map(),
+    propertiesByRule,
+    rulesByProperty,
     rules,
     rulesByProperty: new Map(),
   });
