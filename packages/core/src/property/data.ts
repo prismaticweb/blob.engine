@@ -16,15 +16,21 @@ export function StaticProperty(spec: { id: string; type: string }): StaticProper
 
 export type ParameterizedProperty = Readonly<{
   id: string;
+  parameters: Array<any> | (() => any);
   parameterized: true;
   type: string;
 }>;
 
-export function ParameterizedProperty(spec: { id: string; type: string }): ParameterizedProperty {
-  const { id, type } = spec;
+export function ParameterizedProperty(spec: {
+  id: string;
+  parameters: Array<any> | (() => any);
+  type: string;
+}): ParameterizedProperty {
+  const { id, parameters, type } = spec;
 
   return Object.freeze({
     id,
+    parameters,
     parameterized: true,
     type,
   });
