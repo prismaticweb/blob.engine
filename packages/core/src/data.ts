@@ -91,6 +91,8 @@ function ParameterizedProperty(spec: {
   });
 }
 
+export type Property = StaticProperty | ParameterizedProperty;
+
 export type PropertyGraph = Readonly<{
   featureInstancesByFeature: Map<string, Map<string, FeatureInstance>>;
   featureInstancesByProperty: Map<string, Map<string, FeatureInstance>>;
